@@ -2,7 +2,7 @@
 // Created by spl211 on 02/01/2021.
 //
 
-#include <readAndWrite.h>
+#include "../include/readAndWrite.h"
 #include <iostream>
 #include <thread>
 #include <fstream>
@@ -35,6 +35,7 @@ public:
             i++;
         }
 
+        //read the opCode from keyBoard
         if(word == "ADMINREG")
             opCode =1;
         else if(word == "STUDENTREG")
@@ -77,10 +78,9 @@ public:
             std::cerr<< "Cannot connect to" << host<< ":" << port << std::endl;
         }
         else{
+            //send the message to server as bytes
             connectionHandler.sendBytes(myString.c_str(),myString.length());
         }
-
-        connectionHandler.getBytes();
 
     }
 }
