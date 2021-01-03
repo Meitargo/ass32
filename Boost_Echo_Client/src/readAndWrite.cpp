@@ -13,24 +13,25 @@ using std::cin;
 
 class readAndWrite{
 private:
-    string input;
+
     const string host;//ip
     const short port;
-    //tcp::socket socket;
+
 public:
-    readAndWrite(string input, string host, short port) : input(input), host(host), port(port) {}
+    readAndWrite(string host, short port) :  host(host), port(port) {}
 
     void run(){
+        string input="";
         string word="";
         short opCode;
         string withoutOpCode="";
         getline(cin, input);
         int i=0;
 
-        while(i < input.size()){
-            if(input.at(i) = ' '){
-                word = input.substr(0,i);
-                withoutOpCode = input.substr(i+1, input.size());
+        while(i < input.size()) {
+            if (input.at(i) = ' ') {
+                word = input.substr(0, i);
+                withoutOpCode = input.substr(i + 1, input.size());
             }
             i++;
         }

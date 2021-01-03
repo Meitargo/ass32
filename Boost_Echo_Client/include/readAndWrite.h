@@ -21,7 +21,7 @@ private:
     tcp::socket socket;
 
 public:
-    readAndWrite(string input, string host, short port, tcp::socket socket);
+    readAndWrite(string host, short port);
     virtual ~readAndWrite();
 
     void run();
