@@ -19,10 +19,9 @@ private:
     const string host;//ip
     const short port;
     tcp::socket socket;
-    std::mutex & _mutex;
 
 public:
-    readAndWrite(string input, string host, short port, tcp::socket socket, mutex);
+    readAndWrite(string input, string host, short port, tcp::socket socket);
     virtual ~readAndWrite();
 
     void run();
