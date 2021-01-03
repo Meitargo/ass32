@@ -24,8 +24,24 @@ int main (int argc, char *argv[]) {
 
     //TODO: executeThread1
 
-    char bytes [];
-    connectionHandler.getBytes(bytes, );
+    char bytes [2];//for the opCODE - BYTESTOSHORT
+    connectionHandler.getBytes(bytes,2 );
+    short opCode = connectionHandler.bytesToShort(bytes);
+    char bytesOp [2];
+    short msgOp = connectionHandler.getBytes(bytesOp,2);
+
+    if(opCode==12){
+        string str = "";
+        connectionHandler.getFrameAscii(str, '/0');
+        if(str == ""){
+            cout << "ACK" + msgOp <<endl;
+        }else{
+            cout << "ACK" + msgOp + '\n' + str <<endl;
+        }
+    }
+    else if(opCode==13){
+       cout << "ERROR " + msgOp << endl;
+    }
 	//From here we will see the rest of the ehco client implementation:
     while (1) {
         const short bufsize = 1024;
