@@ -1,5 +1,8 @@
 #include <connectionHandler.h>
- 
+#include <iostream>
+#include <fstream>
+#include
+
 using boost::asio::ip::tcp;
 
 using std::cin;
@@ -98,6 +101,13 @@ bool ConnectionHandler::sendFrameAscii(const std::string& frame, char delimiter)
 	if(!result) return false;
 	return sendBytes(&delimiter,1);
 }
+
+void ConnectionHandler:: shortToBytes(short num, char* bytesArr)
+{
+    bytesArr[0] = ((num >> 8) & 0xFF);
+    bytesArr[1] = (num & 0xFF);
+}
+
  
 // Close down the connection properly.
 void ConnectionHandler::close() {

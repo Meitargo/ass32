@@ -1,10 +1,5 @@
 #include <iostream>
 
- void shortToBytes(short num, char* bytesArr)
-{
-    bytesArr[0] = ((num >> 8) & 0xFF);
-    bytesArr[1] = (num & 0xFF);
-}
 
 int main(int argc, char **argv) {
 
@@ -21,17 +16,7 @@ int main(int argc, char **argv) {
         BufferedWriter out = new BufferesWrite(new OutputStreamWriter(sock.getOutputStream()));
     }
 
-    ConnectionHandler connectionHandler(host,port);
-    if(!connectionHandler.connect()){
-    std::cerr<< "Cannot connect to" << host<< ":" << port << std::endl;
-    return 1;
-    }
 
-     char [] bytesArr;
-    else{
-        shortToBytes
-        connectionHandler.sendBytes(bytesArr);
-    }
 
 
 }
