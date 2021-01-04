@@ -15,10 +15,8 @@ using namespace std;
 
 class readAndWrite{
 private:
-    string input;
     const string host;//ip
     const short port;
-    tcp::socket socket;
 
 public:
     readAndWrite(string host, short port);

@@ -13,7 +13,6 @@ using std::cin;
 
 class readAndWrite{
 private:
-
     const string host;//ip
     const short port;
 
