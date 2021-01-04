@@ -6,24 +6,24 @@
 #include <iostream>
 #include <thread>
 #include <fstream>
+#include "../include/connectionHandler.h"
+
 
 using namespace std;
 
 using std::cin;
 
-class readFromSrv{
-private:
+
+
     const string host;//ip
-    const short port;
+    const short port=0;
 
-public:
-    readFromSrv(string host, short port) :  host(host), port(port) {}
+    readFromSrv::readFromSrv(string host, short port):  host(host), port(port){}
 
-    void run() {
+    void readFromSrv::run() {
         ConnectionHandler connectionHandler(host, port);
         if (!connectionHandler.connect()) {
             std::cerr << "Cannot connect to " << host << ":" << port << std::endl;
-            return 1;
         }
 
         char bytes [2];//for the opCODE - BYTESTOSHORT
@@ -46,4 +46,3 @@ public:
         }
 
     }
-};

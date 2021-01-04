@@ -6,20 +6,20 @@
 #include <iostream>
 #include <thread>
 #include <fstream>
+#include "../include/connectionHandler.h"
+
 
 using namespace std;
 
 using std::cin;
 
-class readAndWrite{
-private:
     const string host;//ip
-    const short port;
+    const short port = 0;
 
-public:
-    readAndWrite(string host, short port) :  host(host), port(port) {}
 
-    void run(){
+    readAndWrite::readAndWrite(string host, short port) : host(host), port(port) {}
+
+    void readAndWrite::run(){
         string input="";
         string word="";
         short opCode;
@@ -83,7 +83,7 @@ public:
         }
 
     }
-}
+
 
 
 
