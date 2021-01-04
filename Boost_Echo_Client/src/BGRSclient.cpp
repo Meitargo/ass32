@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include "../include/connectionHandler.h"
 #include "../include/readAndWrite.h"
 #include "../include/readFromSrv.h"
 
