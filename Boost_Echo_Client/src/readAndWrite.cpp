@@ -75,7 +75,7 @@ using std::cin;
             }
         }
 
-        int len = 2+withoutOpCode.length();
+        int len = 3+withoutOpCode.length();
 
         char opCodeByte[len];
 
@@ -94,6 +94,7 @@ using std::cin;
                 j++;
             }
 
+            opCodeByte[j] = '\0';
             //send the message to server as bytes
 
             connectionHandler.sendBytes(opCodeByte,len);
