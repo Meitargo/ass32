@@ -6,17 +6,17 @@
 #include <iostream>
 #include <thread>
 #include <fstream>
-#include "../include/connectionHandler.h"
 
 
 using namespace std;
 
 using std::cin;
 
-    const string host;//ip
-    const short port = 0;
+    //const string host;//ip
+    //const short port = 0;
+    ConnectionHandler *connectionHandler;
 
-    readAndWrite::readAndWrite(string host, short port) : host(host), port(port) {}
+    readAndWrite::readAndWrite(ConnectionHandler &connectionHandler) : connectionHandler(connectionHandler){}
 
     void readAndWrite::run(){
         string input="";
@@ -79,9 +79,8 @@ using std::cin;
 
         char opCodeByte[len];
 
-        ConnectionHandler connectionHandler(host,port);
         if(!connectionHandler.connect()){
-            std::cerr<< "Cannot connect to" << host<< ":" << port << std::endl;
+            std::cerr<< "Cannot connect " << endl;
         }
 
         else{
