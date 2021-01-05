@@ -5,7 +5,6 @@
 #ifndef ASS32_READANDWRITE_H
 #define ASS32_READANDWRITE_H
 #include <string>
-#endif //ASS32_READANDWRITE_H
 #include <boost/asio.hpp>
 using boost::asio::ip::tcp;
 
@@ -20,8 +19,8 @@ private:
 
 public:
     readAndWrite(string host, short port);
-    virtual ~readAndWrite();
-
     void run();
 
 };
+
+#endif //ASS32_READANDWRITE_H

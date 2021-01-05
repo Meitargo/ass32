@@ -16,7 +16,6 @@ using std::cin;
     const string host;//ip
     const short port = 0;
 
-
     readAndWrite::readAndWrite(string host, short port) : host(host), port(port) {}
 
     void readAndWrite::run(){
@@ -27,17 +26,20 @@ using std::cin;
         getline(cin, input);
         int i=0;
 
-        while(i < input.size()) {
-            if (input.at(i) = ' ') {
-                word = input.substr(0, i);
-                withoutOpCode = input.substr(i + 1, input.size());
-            }
+        while(i < input.size() &&input.at(i) != ' ' ) {
             i++;
         }
 
+         word = input.substr(0, i);
+         withoutOpCode = input.substr(i + 1, input.size());
+        cout << "initializewithoutocode: " << withoutOpCode << endl;
+
+
+
         //read the opCode from keyBoard
-        if(word == "ADMINREG")
+        if(word == "ADMINREG"){
             opCode =1;
+        }
         else if(word == "STUDENTREG")
             opCode = 2;
         else if(word == "LOGIN")
@@ -62,24 +64,39 @@ using std::cin;
 
         if(opCode == 1 || opCode == 2 || opCode ==3){
             i=0;
+            cout << "INIF" << opCode << endl;
+
             while(i < withoutOpCode.size()){
-                if(withoutOpCode.at(i) = ' '){
-                   withoutOpCode.at(i) = '/0';
+                if(withoutOpCode.at(i) == ' '){
+                   withoutOpCode.at(i) = '\0';
+                    cout << "check" << withoutOpCode << endl;
                 }
                 i++;
             }
         }
 
-        std::string s = std::to_string(opCode);
-        const string myString = s + withoutOpCode;
+        int len = 2+withoutOpCode.length();
+
+        char opCodeByte[len];
 
         ConnectionHandler connectionHandler(host,port);
         if(!connectionHandler.connect()){
             std::cerr<< "Cannot connect to" << host<< ":" << port << std::endl;
         }
+
         else{
+            connectionHandler.shortToBytes(opCode, opCodeByte);
+            int i=0;
+            int j=2;
+            while(i<withoutOpCode.length()){
+                opCodeByte[j] = withoutOpCode.at(i);
+                i++;
+                j++;
+            }
+
             //send the message to server as bytes
-            connectionHandler.sendBytes(myString.c_str(),myString.length());
+
+            connectionHandler.sendBytes(opCodeByte,len);
         }
 
     }

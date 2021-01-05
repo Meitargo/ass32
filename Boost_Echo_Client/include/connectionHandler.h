@@ -46,6 +46,9 @@ public:
     bool sendFrameAscii(const std::string& frame, char delimiter);
 
     short bytesToShort(char* bytesArr);
+
+    void shortToBytes(short num, char* bytesArr);
+
     // Close down the connection properly.
     void close();
  

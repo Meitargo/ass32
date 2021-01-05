@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "../include/readAndWrite.h"
-#include "../include/readFromSrv.h"
+#include "../include/connectionHandler.h"
 
 #include <iostream>
 
@@ -17,12 +17,36 @@ int main (int argc, char *argv[]) {
     short port = atoi(argv[2]);
 
     readAndWrite readKey(host, port);
-    std::thread th(&readAndWrite::run, &readKey);
-    th.join();
+    std::thread th1(&readAndWrite::run, &readKey);
+    th1.join();
 
-    readFromSrv readFromSrv(host, port);
-    std::thread th2(&readFromSrv::run, &readFromSrv);
-    th2.join();
+    cout <<"hi" <<endl;
+    ConnectionHandler connectionHandler(host, port);
+    if (!connectionHandler.connect()) {
+        std::cerr << "Cannot connect to " << host << ":" << port << std::endl;
+    }
+
+    else{
+        char bytes [2];//for the opCODE - BYTESTOSHORT
+        connectionHandler.getBytes(bytes,2 );
+        short opCode = connectionHandler.bytesToShort(bytes);
+        char bytesOp [2];
+        short msgOp = connectionHandler.getBytes(bytesOp,2);
+
+        if(opCode==12){
+            string str = "";
+            connectionHandler.getFrameAscii(str, '\0');
+            if(str == ""){
+                cout << "ACK" + msgOp <<endl;
+            }else{
+                cout << "ACK" + msgOp + '\n' + str <<endl;
+            }
+        }
+        else if(opCode==13){
+            cout << "ERR " + msgOp << endl;
+        }
+
+    }
 
     return 0;
 }
