@@ -19,9 +19,10 @@ private:
     //const string host;//ip
     //const short port;
     ConnectionHandler &connectionHandler;
+    bool &terminate;
 
 public:
-    readAndWrite(ConnectionHandler &connectionHandler);
+    readAndWrite(ConnectionHandler &connectionHandler, bool &terminate);
     void run();
 
 };

@@ -15,8 +15,9 @@ using std::cin;
     //const string host;//ip
     //const short port = 0;
     ConnectionHandler *connectionHandler;
+    bool *terminate;
 
-    readAndWrite::readAndWrite(ConnectionHandler &connectionHandler) : connectionHandler(connectionHandler){}
+    readAndWrite::readAndWrite(ConnectionHandler &connectionHandler, bool &terminate) : connectionHandler(connectionHandler), terminate(terminate){}
 
     void readAndWrite::run(){
         string input="";
@@ -26,20 +27,14 @@ using std::cin;
         getline(cin, input);
         int i=0;
 
-        while(i < input.size() &&input.at(i) != ' ' ) {
+        while(i < input.size() && input.at(i) != ' ' ) {
             i++;
         }
 
          word = input.substr(0, i);
-         withoutOpCode = input.substr(i + 1, input.size());
-        cout << "initializewithoutocode: " << withoutOpCode << endl;
 
-
-
-        //read the opCode from keyBoard
-        if(word == "ADMINREG"){
+        if(word == "ADMINREG")
             opCode =1;
-        }
         else if(word == "STUDENTREG")
             opCode = 2;
         else if(word == "LOGIN")
@@ -62,22 +57,29 @@ using std::cin;
             opCode = 11;
 
 
-        if(opCode == 1 || opCode == 2 || opCode ==3){
-            i=0;
-            cout << "INIF" << opCode << endl;
+        if(opCode!=4 && opCode!=11){
+            withoutOpCode = input.substr(i + 1, input.size());
+        }
 
+        //read the opCode from keyBoard
+        int len;
+        if(opCode == 1 || opCode ==2 || opCode ==3){
+            i=0;
             while(i < withoutOpCode.size()){
                 if(withoutOpCode.at(i) == ' '){
                    withoutOpCode.at(i) = '\0';
-                    cout << "check" << withoutOpCode << endl;
                 }
                 i++;
             }
+            len = 3+withoutOpCode.length();
+        }
+        if(opCode ==5 || opCode ==6 ||opCode ==7 || opCode ==9 || opCode==10){
+            len = 2+withoutOpCode.length();;
         }
 
-        int len = 3+withoutOpCode.length();
 
         char opCodeByte[len];
+
 
         if(!connectionHandler.connect()){
             std::cerr<< "Cannot connect " << endl;

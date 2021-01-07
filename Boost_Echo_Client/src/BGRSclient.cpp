@@ -15,48 +15,44 @@ int main (int argc, char *argv[]) {
     }
     std::string host = argv[1];
     short port = atoi(argv[2]);
+    bool terminate  = false;
 
-    ConnectionHandler connectionHandler(host, port);
-
-    readAndWrite readKey(connectionHandler);
-    std::thread th1(&readAndWrite::run, &readKey);
-    th1.join();
-
-
-    /*if (!connectionHandler.connect()) {
-        std::cerr << "Cannot connect to " << host << ":" << port << std::endl;
-    }*/
+    while(!terminate) {
+        ConnectionHandler connectionHandler(host, port);
+        readAndWrite readKey(connectionHandler, terminate);
+        std::thread th1(&readAndWrite::run, &readKey);
+        th1.join();
 
 
-        char bytes [2];//for the opCODE - BYTESTOSHORT
-
-        connectionHandler.getBytes(bytes,2 );
-
+        char bytes[2];//for the opCODE - BYTESTOSHORT
+        connectionHandler.getBytes(bytes, 2);
         short opCode = connectionHandler.bytesToShort(bytes);
-        cout << "opCode:" <<opCode << endl;
-        char bytesOp [2];
-        connectionHandler.getBytes(bytesOp,2);
-        short msgOp = connectionHandler.bytesToShort(bytesOp);
-        cout << bytesOp[0] << ","<< bytesOp[1] << endl;
-        cout <<  "msgOp: " << msgOp << endl;
+        cout << "opCode:" << opCode << endl;
+        char bytesOp[2];
 
-        if(opCode==12){
+        connectionHandler.getBytes(bytesOp, 2);
+        short msgOp = connectionHandler.bytesToShort(bytesOp);
+        cout << "msgOp: " << msgOp << endl;
+
+        if (opCode == 12) {
             string str = "";
-            if(msgOp ==6 ||msgOp ==7 || msgOp ==8|| msgOp ==0){
+            if (msgOp == 6 || msgOp == 7 || msgOp == 8 || msgOp == 0) {
                 connectionHandler.getFrameAscii(str, '\0');
             }
 
-            if(str == ""){
-                cout << "ACK " << msgOp <<endl;
-            }else{
+            if (str == "") {
+                cout << "ACK " << msgOp << endl;
+            } else {
                 cout << "ACK " << msgOp + '\n' << str << endl;
             }
-        }
-        else if(opCode==13){
+        } else if (opCode == 13) {
             cout << "ERR " << msgOp << endl;
         }
 
-
+        if (msgOp == 4) {
+            terminate = true;
+        }
+    }
 
     return 0;
 }
