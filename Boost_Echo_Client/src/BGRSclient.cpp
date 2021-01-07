@@ -38,12 +38,13 @@ int main (int argc, char *argv[]) {
             string str = "";
             if (msgOp == 6 || msgOp == 7 || msgOp == 8 || msgOp == 0) {
                 connectionHandler.getFrameAscii(str, '\0');
+
             }
 
             if (str == "") {
                 cout << "ACK " << msgOp << endl;
             } else {
-                cout << "ACK " << msgOp + '\n' << str << endl;
+                cout << "ACK " << msgOp << '\n' << str << endl;
             }
         } else if (opCode == 13) {
             cout << "ERR " << msgOp << endl;

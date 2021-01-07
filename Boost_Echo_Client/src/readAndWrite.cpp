@@ -62,6 +62,10 @@ using std::cin;
         }
 
         //read the opCode from keyBoard
+        if(withoutOpCode.length() == 1){
+            withoutOpCode = '0' + withoutOpCode;
+        }
+
         int len;
         if(opCode == 1 || opCode ==2 || opCode ==3){
             i=0;
@@ -73,8 +77,9 @@ using std::cin;
             }
             len = 3+withoutOpCode.length();
         }
+
         if(opCode ==5 || opCode ==6 ||opCode ==7 || opCode ==9 || opCode==10){
-            len = 2+withoutOpCode.length();;
+            len = 2+withoutOpCode.length();
         }
 
 
@@ -86,10 +91,13 @@ using std::cin;
         }
 
         else{
+            cout << opCode << endl;
             connectionHandler.shortToBytes(opCode, opCodeByte);
             int i=0;
             int j=2;
+
             while(i<withoutOpCode.length()){
+                cout<< withoutOpCode[i] << endl;
                 opCodeByte[j] = withoutOpCode.at(i);
                 i++;
                 j++;
