@@ -36,7 +36,7 @@ int main (int argc, char *argv[]) {
 
         if (opCode == 12) {
             string str = "";
-            if (msgOp == 6 || msgOp == 7 || msgOp == 8 || msgOp == 0) {
+            if (msgOp == 6 || msgOp == 7 || msgOp == 8 || msgOp == 9 || msgOp==11) {
                 connectionHandler.getFrameAscii(str, '\0');
 
             }

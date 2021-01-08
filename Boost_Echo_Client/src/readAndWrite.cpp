@@ -82,7 +82,13 @@ using std::cin;
             len = 2+withoutOpCode.length();
         }
 
+        if(opCode==8){
+            len = 3+withoutOpCode.length();
+        }
 
+        if(opCode==4 |opCode ==11){
+            len =2;
+        }
         char opCodeByte[len];
 
 
@@ -103,7 +109,10 @@ using std::cin;
                 j++;
             }
 
-            opCodeByte[j] = '\0';
+            if(opCode!=4 &&opCode!=11){
+                opCodeByte[j] = '\0';
+            }
+
             //send the message to server as bytes
 
             connectionHandler.sendBytes(opCodeByte,len);
